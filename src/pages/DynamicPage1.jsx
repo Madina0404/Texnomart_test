@@ -1,9 +1,11 @@
  import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { BasketContext } from "../context/BasketContext";
 
 const DynamicPage1 = () => {
   const [data, setData] = useState({});
+  const {addData} = useContext(BasketContext)
 
   const params = useParams();
   const getData = async () => {
@@ -78,7 +80,7 @@ const DynamicPage1 = () => {
           <div className="border-2 p-3 rounded-lg">
             <b>{data.price} so'm</b>
             <div className="flex gap-2">
-              <button className="bg-yellow-500 px-5 py-3 rounded-lg">
+              <button onClick={()=>addData(item)} className="bg-yellow-500 px-5 py-3 rounded-lg">
                 Savatchaga
               </button>
               <button className="bg-gray-300 px-5 py-3 rounded-lg">

@@ -4,19 +4,21 @@ import { createContext, useContext, useEffect, useState } from "react";
 export const BasketContext = createContext();
 
 const KarzinkaProvider = ({ children }) => {
-  const storage = JSON.parse(localStorage.getItem("KarzinkaProduct")) || []
-console.log(storage);
-  const [basket, setBasket] = useState(storage);
+  const [basket, setBasket] = useState(() => {
+    const storedBasket = localStorage.getItem("KarzinkaProduct");
+    try {
+      return storedBasket ? JSON.parse(storedBasket) : [];
+    } catch (error) {
+      console.error("Error parsing basket data from localStorage:", error);
+      return [];
+    }
+  });
 
-     const addData = (product) => {
-       let check = basket.some((item) => item.id === product.id);
-       if (!check) {
-         let newData = [...basket, product];
-         setBasket(newData);
-       }
-     };
-  
- 
+  const addData = (product) => {
+    if (!basket.some((item) => item.id === product.id)) {
+      setBasket([...basket, product]);
+    }
+  };
 
   const removeData = (id) => {
     const newData = basket.filter((item) => item.id !== id);
@@ -25,7 +27,7 @@ console.log(storage);
 
   useEffect(() => {
     localStorage.setItem("KarzinkaProduct", JSON.stringify(basket));
-  }, [basket]);
+  }, [basket]); 
 
   return (
     <BasketContext.Provider value={{ addData, removeData, basket }}>

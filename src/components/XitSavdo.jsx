@@ -8,10 +8,13 @@ import "swiper/css";
 import { XitSavdoContext } from "../context/XitSavdoContext";
 import { Link } from "react-router-dom";
 import { BasketContext } from "../context/BasketContext";
+import { LikeContext } from "../context/LikeContext";
+import Likes from "../pages/Likes";
 
 const XitSavdo = () => {
   const { wrap } = useContext(XitSavdoContext);
-  const {addData} = useContext(BasketContext)
+  const { addData } = useContext(BasketContext);
+  const { addLike } = useContext(LikeContext);
   return (
     <div>
       <h1 className="text-[30px]">Xit savdo</h1>
@@ -43,11 +46,14 @@ const XitSavdo = () => {
                       <p className="bg-green-500 px-2 rounded-md text-white">
                         0*0*12
                       </p>
-                      <img
-                        style={{ width: "20px" }}
-                        src="https://texnomart.uz/_nuxt/img/like.e6bfe0f.svg"
-                        alt=""
-                      />
+                      <Link to={<Likes/>}>
+                        <img
+                          onClick={() => addLike(item)}
+                          style={{ width: "20px" }}
+                          src="https://texnomart.uz/_nuxt/img/like.e6bfe0f.svg"
+                          alt=""
+                        />
+                      </Link>
                     </div>
                     <Link to={`/XitSavdo/${item.id}`}>
                       <div className=" py-3 px-2 rounded-2xl">
@@ -70,7 +76,7 @@ const XitSavdo = () => {
                     </Link>
                     <div className="flex justify-between">
                       <b>{item.price}</b>
-                      <div onClick={()=>addData(item)} className="w-[30px]">
+                      <div onClick={() => addData(item)} className="w-[30px]">
                         <img
                           className=" border-2 cursor-pointer rounded-lg  border-yellow-400"
                           src="https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-12-1024.png"
