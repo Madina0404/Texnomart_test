@@ -26,17 +26,19 @@ export default function SwiperBanner() {
   return (
     <>
       <Swiper
-        slidesPerView={6}
         spaceBetween={100}
         modules={[Pagination]}
-        className="mySwiper"
-        
+        slidesPerView={6}
       >
         <div className="flex items-center justify-center ">
           {brandData.map((item) => (
             <SwiperSlide key={item.id} className="swiperItem">
-              <div className="w-[150px] h-[60px]">
-                <img className="shadow-xl p-3 rounded-xl" src={item.img} alt="" />
+              <div className="max-w-[100%] w-full h-[60px]">
+                <img
+                  className="shadow-xl p-3 rounded-xl"
+                  src={item.img}
+                  alt=""
+                />
               </div>
             </SwiperSlide>
           ))}

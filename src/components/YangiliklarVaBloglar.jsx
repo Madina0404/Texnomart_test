@@ -49,7 +49,7 @@ const YangiliklarVaBloglar = () => {
           {brands.map((item, index) => (
             <SwiperSlide>
               <div key={index}>
-                <div className="w-[330px] h-[160px]">
+                <div className="w-[100%] h-[160px]">
                   <img
                     className="rounded-2xl"
                     src={item.img}

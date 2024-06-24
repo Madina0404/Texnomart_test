@@ -10,7 +10,6 @@ import YangiliklarVaBloglar from "../components/YangiliklarVaBloglar";
 const Home = () => {
   return (
     <div>
-      <Navbar />
       <Carousel />
       <Brands />
       <br />

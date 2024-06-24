@@ -2,11 +2,14 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BasketContext } from "../context/BasketContext";
-
+import { FreeMode, EffectFade, Navigation, Thumbs } from "swiper/modules"; 
+import "swiper/css"; 
+import { Swiper, SwiperSlide } from "swiper/react"; 
+import "swiper/css/navigation"; 
 const DynamicPage1 = () => {
   const [data, setData] = useState({});
-  const {addData} = useContext(BasketContext)
-
+  const { addData } = useContext(BasketContext);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null); 
   const params = useParams();
   const getData = async () => {
     try {
@@ -31,12 +34,99 @@ const DynamicPage1 = () => {
         </p>
       </div>
       <hr />
-      <div className=" max-w-[1800px] mx-auto p-5 flex justify-between">
+      <div className=" max-w-[1800px] mx-auto flex-col xl:flex xl:flex-row p-5 flex justify-between">
         <div>
           <div>
             <div className="flex gap-14">
-              <img width={500} src={data.img} alt="" />
-              <div>
+              {/* swiper */}
+              <div className="max-w-[648px] w-full flex flex-row-reverse h-[457px]">
+                <Swiper
+                  style={{
+                    "--swiper-navigation-color": "#fff",
+                    "--swiper-pagination-color": "#fff",
+                  }}
+                  spaceBetween={10}
+                  thumbs={{
+                    swiper:
+                      thumbsSwiper && !thumbsSwiper.destroyed
+                        ? thumbsSwiper
+                        : null,
+                  }}
+                  modules={[FreeMode, EffectFade, Navigation, Thumbs]}
+                  className="max-w-[555px] din_swiper w-full h-auto"
+                >
+                  {data.img && (
+                    <SwiperSlide>
+                      <img
+                        width={250}
+                        src={data.img}
+                        className="w-full object-contain h-full bg-white"
+                        alt="product1"
+                      />
+                    </SwiperSlide>
+                  )}
+                  {data.img2 && (
+                    <SwiperSlide>
+                      <img
+                        src={data.img2}
+                        className="w-full h-full object-contain bg-white"
+                        alt="product2"
+                      />
+                    </SwiperSlide>
+                  )}
+                  {data.img3 && (
+                    <SwiperSlide>
+                      <img
+                        src={data.img3}
+                        className="w-full object-contain h-full bg-white"
+                        alt="product3"
+                      />
+                    </SwiperSlide>
+                  )}
+                  {data.img && (
+                    <SwiperSlide>
+                      <img
+                        src={data.img}
+                        className="w-full object-contain h-full bg-white"
+                        alt="product4"
+                      />
+                    </SwiperSlide>
+                  )}
+                </Swiper>
+
+                <Swiper
+                  onSwiper={setThumbsSwiper}
+                  spaceBetween={0}
+                  slidesPerView={4}
+                  freeMode={true}
+                  direction={"vertical"}
+                  watchSlidesProgress={true}
+                  modules={[FreeMode, Navigation, Thumbs]}
+                  className="flex w-[85px] h-[419px] flex-col"
+                >
+                  {data.img && (
+                    <SwiperSlide>
+                      <div
+                        style={{
+                          backgroundImage: `url('${data.img}')`,
+                        }}
+                        className="w-[85px] flex bg-center bg-no-repeat bg-contain items-center justify-center h-[85px] border-2 overflow-hidden hover:border-black border-white rounded-[10px]"
+                      ></div>
+                    </SwiperSlide>
+                  )}
+                  {data.img2 && (
+                    <SwiperSlide>
+                      <div
+                        style={{
+                          backgroundImage: `url('${data.img2}')`,
+                        }}
+                        className="w-[85px] flex bg-center bg-no-repeat bg-contain items-center justify-center h-[85px] border-2 overflow-hidden hover:border-black border-white rounded-[10px]"
+                      ></div>
+                    </SwiperSlide>
+                  )}
+                </Swiper>
+              </div>
+              <div className=" hidden lg:block">
                 <b>Maxsulot haqida qisqacha</b>
                 <p>Brand ...................................... {data.brand}</p>
                 <p>
@@ -80,10 +170,13 @@ const DynamicPage1 = () => {
           <div className="border-2 p-3 rounded-lg">
             <b>{data.price} so'm</b>
             <div className="flex gap-2">
-              <button onClick={()=>addData(item)} className="bg-yellow-500 px-5 py-3 rounded-lg">
+              <button
+                onClick={() => addData(item.id)}
+                className="bg-yellow-500 px-5 py-3 rounded-lg w-[50%]"
+              >
                 Savatchaga
               </button>
-              <button className="bg-gray-300 px-5 py-3 rounded-lg">
+              <button className="bg-gray-300 px-5 py-3 rounded-lg w-[50%]">
                 Birgina click orqali xarid
               </button>
             </div>
@@ -110,7 +203,7 @@ const DynamicPage1 = () => {
                 <div>
                   <div className=" justify-between items-center my-3 flex">
                     <img
-                    width={150}
+                      width={150}
                       src="https://mini-io-api.texnomart.uz/order/order/loan-system/9/d9953ed3-2e7c-4276-a490-9a94540373e0.png"
                       alt=""
                     />
@@ -127,7 +220,7 @@ const DynamicPage1 = () => {
                 <div>
                   <div className=" justify-between items-center my-3 flex">
                     <img
-                    width={150}
+                      width={150}
                       src="https://mini-io-api.texnomart.uz/order/order/loan-system/1/0068a7cc-1393-461a-a1bd-56577fcd4660.png"
                       alt=""
                     />
@@ -144,7 +237,7 @@ const DynamicPage1 = () => {
                 <div>
                   <div className=" justify-between items-center my-3 flex">
                     <img
-                    width={140}
+                      width={140}
                       src="https://mini-io-api.texnomart.uz/order/order/loan-system/11/18f06a4f-c363-4e54-bc9b-636c533f08d7.png"
                       alt=""
                     />

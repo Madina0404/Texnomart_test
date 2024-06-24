@@ -18,13 +18,17 @@ const LikeProvider = ({ children }) => {
       setLike([...like, card]);
     }
   };
+  const removeLike = (id)=>{
+    const newData = like.filter((item) => item.id !== id);
+    setLike(newData);
+  }
 
   useEffect(() => {
     localStorage.setItem("LikeBasket", JSON.stringify(like));
   }, [like]);
 
   return (
-    <LikeContext.Provider value={{ addLike }}>{children}</LikeContext.Provider>
+    <LikeContext.Provider value={{ addLike, like, removeLike }}>{children}</LikeContext.Provider>
   );
 };
 

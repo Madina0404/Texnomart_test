@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -10,8 +10,10 @@ import { Link } from "react-router-dom";
 import { BasketContext } from "../context/BasketContext";
 import { LikeContext } from "../context/LikeContext";
 import Likes from "../pages/Likes";
+import Love from "../assets/icons/Love.svg";
 
 const XitSavdo = () => {
+  const [Clicked, setClicked] = useState(false);
   const { wrap } = useContext(XitSavdoContext);
   const { addData } = useContext(BasketContext);
   const { addLike } = useContext(LikeContext);
@@ -46,19 +48,26 @@ const XitSavdo = () => {
                       <p className="bg-green-500 px-2 rounded-md text-white">
                         0*0*12
                       </p>
-                      <Link to={<Likes/>}>
+                      <div onClick={() => addLike(item)}>
                         <img
-                          onClick={() => addLike(item)}
-                          style={{ width: "20px" }}
-                          src="https://texnomart.uz/_nuxt/img/like.e6bfe0f.svg"
+                          onClick={(e) => {
+                            if (!Clicked) {
+                              e.target.style.backgroundColor = "red";
+                              setClicked(true);
+                            } else {
+                              e.target.style.backgroundColor = "white";
+                              setClicked(false);
+                            }
+                          }}
+                          src={Love}
                           alt=""
                         />
-                      </Link>
+                      </div>
                     </div>
                     <Link to={`/XitSavdo/${item.id}`}>
                       <div className=" py-3 px-2 rounded-2xl">
                         <div className="h-[300px] overflow-hidden">
-                          <img className="object-cover" src={item.img} alt="" />
+                          <img className="object-cover aspect-video" src={item.img} alt="" />
                         </div>
                         <h2>{item.title}</h2>
                         <br />
@@ -75,8 +84,11 @@ const XitSavdo = () => {
                       </div>
                     </Link>
                     <div className="flex justify-between">
-                      <b>{item.price}</b>
-                      <div onClick={() => addData(item)} className="w-[30px]">
+                      <b>{item.price} so'm</b>
+                      <div
+                        onClick={() => addData(item)}
+                        className="w-[30px] border-yellow-400"
+                      >
                         <img
                           className=" border-2 cursor-pointer rounded-lg  border-yellow-400"
                           src="https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-12-1024.png"
